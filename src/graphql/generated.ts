@@ -1238,6 +1238,8 @@ export type Lesson = Node & {
   /** The unique identifier */
   id: Scalars['ID'];
   lessonType: LessonType;
+  /** Complementary Material field */
+  material?: Maybe<Material>;
   /** The time the document was published. Null on documents in draft stage. */
   publishedAt?: Maybe<Scalars['DateTime']>;
   /** User that last published this document */
@@ -1278,6 +1280,11 @@ export type LessonHistoryArgs = {
   limit?: Scalars['Int'];
   skip?: Scalars['Int'];
   stageOverride?: InputMaybe<Stage>;
+};
+
+
+export type LessonMaterialArgs = {
+  locales?: InputMaybe<Array<Locale>>;
 };
 
 
@@ -1329,6 +1336,7 @@ export type LessonCreateInput = {
   createdAt?: InputMaybe<Scalars['DateTime']>;
   description?: InputMaybe<Scalars['String']>;
   lessonType: LessonType;
+  material?: InputMaybe<MaterialCreateOneInlineInput>;
   slug: Scalars['String'];
   teacher?: InputMaybe<TeacherCreateOneInlineInput>;
   title: Scalars['String'];
@@ -1446,6 +1454,7 @@ export type LessonManyWhereInput = {
   lessonType_not?: InputMaybe<LessonType>;
   /** All values that are not contained in given list. */
   lessonType_not_in?: InputMaybe<Array<LessonType>>;
+  material?: InputMaybe<MaterialWhereInput>;
   publishedAt?: InputMaybe<Scalars['DateTime']>;
   /** All values greater than the given value. */
   publishedAt_gt?: InputMaybe<Scalars['DateTime']>;
@@ -1574,6 +1583,7 @@ export type LessonUpdateInput = {
   challenge?: InputMaybe<ChallengeUpdateOneInlineInput>;
   description?: InputMaybe<Scalars['String']>;
   lessonType?: InputMaybe<LessonType>;
+  material?: InputMaybe<MaterialUpdateOneInlineInput>;
   slug?: InputMaybe<Scalars['String']>;
   teacher?: InputMaybe<TeacherUpdateOneInlineInput>;
   title?: InputMaybe<Scalars['String']>;
@@ -1735,6 +1745,7 @@ export type LessonWhereInput = {
   lessonType_not?: InputMaybe<LessonType>;
   /** All values that are not contained in given list. */
   lessonType_not_in?: InputMaybe<Array<LessonType>>;
+  material?: InputMaybe<MaterialWhereInput>;
   publishedAt?: InputMaybe<Scalars['DateTime']>;
   /** All values greater than the given value. */
   publishedAt_gt?: InputMaybe<Scalars['DateTime']>;
@@ -1862,6 +1873,416 @@ export type LocationInput = {
   longitude: Scalars['Float'];
 };
 
+/** Complementary Material fields */
+export type Material = Node & {
+  __typename?: 'Material';
+  /** The time the document was created */
+  createdAt: Scalars['DateTime'];
+  /** User that created this document */
+  createdBy?: Maybe<User>;
+  /** Get the document in other stages */
+  documentInStages: Array<Material>;
+  /** List of Material versions */
+  history: Array<Version>;
+  /** The unique identifier */
+  id: Scalars['ID'];
+  /** The time the document was published. Null on documents in draft stage. */
+  publishedAt?: Maybe<Scalars['DateTime']>;
+  /** User that last published this document */
+  publishedBy?: Maybe<User>;
+  scheduledIn: Array<ScheduledOperation>;
+  /** System stage field */
+  stage: Stage;
+  /** The time the document was updated */
+  updatedAt: Scalars['DateTime'];
+  /** User that last updated this document */
+  updatedBy?: Maybe<User>;
+  /** url to complementary material */
+  url: Scalars['String'];
+};
+
+
+/** Complementary Material fields */
+export type MaterialCreatedByArgs = {
+  locales?: InputMaybe<Array<Locale>>;
+};
+
+
+/** Complementary Material fields */
+export type MaterialDocumentInStagesArgs = {
+  includeCurrent?: Scalars['Boolean'];
+  inheritLocale?: Scalars['Boolean'];
+  stages?: Array<Stage>;
+};
+
+
+/** Complementary Material fields */
+export type MaterialHistoryArgs = {
+  limit?: Scalars['Int'];
+  skip?: Scalars['Int'];
+  stageOverride?: InputMaybe<Stage>;
+};
+
+
+/** Complementary Material fields */
+export type MaterialPublishedByArgs = {
+  locales?: InputMaybe<Array<Locale>>;
+};
+
+
+/** Complementary Material fields */
+export type MaterialScheduledInArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  locales?: InputMaybe<Array<Locale>>;
+  skip?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<ScheduledOperationWhereInput>;
+};
+
+
+/** Complementary Material fields */
+export type MaterialUpdatedByArgs = {
+  locales?: InputMaybe<Array<Locale>>;
+};
+
+export type MaterialConnectInput = {
+  /** Allow to specify document position in list of connected documents, will default to appending at end of list */
+  position?: InputMaybe<ConnectPositionInput>;
+  /** Document to connect */
+  where: MaterialWhereUniqueInput;
+};
+
+/** A connection to a list of items. */
+export type MaterialConnection = {
+  __typename?: 'MaterialConnection';
+  aggregate: Aggregate;
+  /** A list of edges. */
+  edges: Array<MaterialEdge>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+};
+
+export type MaterialCreateInput = {
+  cl5e9jaq50s0801uogh84ef9h?: InputMaybe<LessonCreateManyInlineInput>;
+  createdAt?: InputMaybe<Scalars['DateTime']>;
+  updatedAt?: InputMaybe<Scalars['DateTime']>;
+  url: Scalars['String'];
+};
+
+export type MaterialCreateManyInlineInput = {
+  /** Connect multiple existing Material documents */
+  connect?: InputMaybe<Array<MaterialWhereUniqueInput>>;
+  /** Create and connect multiple existing Material documents */
+  create?: InputMaybe<Array<MaterialCreateInput>>;
+};
+
+export type MaterialCreateOneInlineInput = {
+  /** Connect one existing Material document */
+  connect?: InputMaybe<MaterialWhereUniqueInput>;
+  /** Create and connect one Material document */
+  create?: InputMaybe<MaterialCreateInput>;
+};
+
+/** An edge in a connection. */
+export type MaterialEdge = {
+  __typename?: 'MaterialEdge';
+  /** A cursor for use in pagination. */
+  cursor: Scalars['String'];
+  /** The item at the end of the edge. */
+  node: Material;
+};
+
+/** Identifies documents */
+export type MaterialManyWhereInput = {
+  /** Logical AND on all given filters. */
+  AND?: InputMaybe<Array<MaterialWhereInput>>;
+  /** Logical NOT on all given filters combined by AND. */
+  NOT?: InputMaybe<Array<MaterialWhereInput>>;
+  /** Logical OR on all given filters. */
+  OR?: InputMaybe<Array<MaterialWhereInput>>;
+  /** Contains search across all appropriate fields. */
+  _search?: InputMaybe<Scalars['String']>;
+  createdAt?: InputMaybe<Scalars['DateTime']>;
+  /** All values greater than the given value. */
+  createdAt_gt?: InputMaybe<Scalars['DateTime']>;
+  /** All values greater than or equal the given value. */
+  createdAt_gte?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are contained in given list. */
+  createdAt_in?: InputMaybe<Array<Scalars['DateTime']>>;
+  /** All values less than the given value. */
+  createdAt_lt?: InputMaybe<Scalars['DateTime']>;
+  /** All values less than or equal the given value. */
+  createdAt_lte?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are not equal to given value. */
+  createdAt_not?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are not contained in given list. */
+  createdAt_not_in?: InputMaybe<Array<Scalars['DateTime']>>;
+  createdBy?: InputMaybe<UserWhereInput>;
+  id?: InputMaybe<Scalars['ID']>;
+  /** All values containing the given string. */
+  id_contains?: InputMaybe<Scalars['ID']>;
+  /** All values ending with the given string. */
+  id_ends_with?: InputMaybe<Scalars['ID']>;
+  /** All values that are contained in given list. */
+  id_in?: InputMaybe<Array<Scalars['ID']>>;
+  /** All values that are not equal to given value. */
+  id_not?: InputMaybe<Scalars['ID']>;
+  /** All values not containing the given string. */
+  id_not_contains?: InputMaybe<Scalars['ID']>;
+  /** All values not ending with the given string */
+  id_not_ends_with?: InputMaybe<Scalars['ID']>;
+  /** All values that are not contained in given list. */
+  id_not_in?: InputMaybe<Array<Scalars['ID']>>;
+  /** All values not starting with the given string. */
+  id_not_starts_with?: InputMaybe<Scalars['ID']>;
+  /** All values starting with the given string. */
+  id_starts_with?: InputMaybe<Scalars['ID']>;
+  publishedAt?: InputMaybe<Scalars['DateTime']>;
+  /** All values greater than the given value. */
+  publishedAt_gt?: InputMaybe<Scalars['DateTime']>;
+  /** All values greater than or equal the given value. */
+  publishedAt_gte?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are contained in given list. */
+  publishedAt_in?: InputMaybe<Array<Scalars['DateTime']>>;
+  /** All values less than the given value. */
+  publishedAt_lt?: InputMaybe<Scalars['DateTime']>;
+  /** All values less than or equal the given value. */
+  publishedAt_lte?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are not equal to given value. */
+  publishedAt_not?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are not contained in given list. */
+  publishedAt_not_in?: InputMaybe<Array<Scalars['DateTime']>>;
+  publishedBy?: InputMaybe<UserWhereInput>;
+  scheduledIn_every?: InputMaybe<ScheduledOperationWhereInput>;
+  scheduledIn_none?: InputMaybe<ScheduledOperationWhereInput>;
+  scheduledIn_some?: InputMaybe<ScheduledOperationWhereInput>;
+  updatedAt?: InputMaybe<Scalars['DateTime']>;
+  /** All values greater than the given value. */
+  updatedAt_gt?: InputMaybe<Scalars['DateTime']>;
+  /** All values greater than or equal the given value. */
+  updatedAt_gte?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are contained in given list. */
+  updatedAt_in?: InputMaybe<Array<Scalars['DateTime']>>;
+  /** All values less than the given value. */
+  updatedAt_lt?: InputMaybe<Scalars['DateTime']>;
+  /** All values less than or equal the given value. */
+  updatedAt_lte?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are not equal to given value. */
+  updatedAt_not?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are not contained in given list. */
+  updatedAt_not_in?: InputMaybe<Array<Scalars['DateTime']>>;
+  updatedBy?: InputMaybe<UserWhereInput>;
+  url?: InputMaybe<Scalars['String']>;
+  /** All values containing the given string. */
+  url_contains?: InputMaybe<Scalars['String']>;
+  /** All values ending with the given string. */
+  url_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values that are contained in given list. */
+  url_in?: InputMaybe<Array<Scalars['String']>>;
+  /** All values that are not equal to given value. */
+  url_not?: InputMaybe<Scalars['String']>;
+  /** All values not containing the given string. */
+  url_not_contains?: InputMaybe<Scalars['String']>;
+  /** All values not ending with the given string */
+  url_not_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values that are not contained in given list. */
+  url_not_in?: InputMaybe<Array<Scalars['String']>>;
+  /** All values not starting with the given string. */
+  url_not_starts_with?: InputMaybe<Scalars['String']>;
+  /** All values starting with the given string. */
+  url_starts_with?: InputMaybe<Scalars['String']>;
+};
+
+export enum MaterialOrderByInput {
+  CreatedAtAsc = 'createdAt_ASC',
+  CreatedAtDesc = 'createdAt_DESC',
+  IdAsc = 'id_ASC',
+  IdDesc = 'id_DESC',
+  PublishedAtAsc = 'publishedAt_ASC',
+  PublishedAtDesc = 'publishedAt_DESC',
+  UpdatedAtAsc = 'updatedAt_ASC',
+  UpdatedAtDesc = 'updatedAt_DESC',
+  UrlAsc = 'url_ASC',
+  UrlDesc = 'url_DESC'
+}
+
+export type MaterialUpdateInput = {
+  cl5e9jaq50s0801uogh84ef9h?: InputMaybe<LessonUpdateManyInlineInput>;
+  url?: InputMaybe<Scalars['String']>;
+};
+
+export type MaterialUpdateManyInlineInput = {
+  /** Connect multiple existing Material documents */
+  connect?: InputMaybe<Array<MaterialConnectInput>>;
+  /** Create and connect multiple Material documents */
+  create?: InputMaybe<Array<MaterialCreateInput>>;
+  /** Delete multiple Material documents */
+  delete?: InputMaybe<Array<MaterialWhereUniqueInput>>;
+  /** Disconnect multiple Material documents */
+  disconnect?: InputMaybe<Array<MaterialWhereUniqueInput>>;
+  /** Override currently-connected documents with multiple existing Material documents */
+  set?: InputMaybe<Array<MaterialWhereUniqueInput>>;
+  /** Update multiple Material documents */
+  update?: InputMaybe<Array<MaterialUpdateWithNestedWhereUniqueInput>>;
+  /** Upsert multiple Material documents */
+  upsert?: InputMaybe<Array<MaterialUpsertWithNestedWhereUniqueInput>>;
+};
+
+export type MaterialUpdateManyInput = {
+  url?: InputMaybe<Scalars['String']>;
+};
+
+export type MaterialUpdateManyWithNestedWhereInput = {
+  /** Update many input */
+  data: MaterialUpdateManyInput;
+  /** Document search */
+  where: MaterialWhereInput;
+};
+
+export type MaterialUpdateOneInlineInput = {
+  /** Connect existing Material document */
+  connect?: InputMaybe<MaterialWhereUniqueInput>;
+  /** Create and connect one Material document */
+  create?: InputMaybe<MaterialCreateInput>;
+  /** Delete currently connected Material document */
+  delete?: InputMaybe<Scalars['Boolean']>;
+  /** Disconnect currently connected Material document */
+  disconnect?: InputMaybe<Scalars['Boolean']>;
+  /** Update single Material document */
+  update?: InputMaybe<MaterialUpdateWithNestedWhereUniqueInput>;
+  /** Upsert single Material document */
+  upsert?: InputMaybe<MaterialUpsertWithNestedWhereUniqueInput>;
+};
+
+export type MaterialUpdateWithNestedWhereUniqueInput = {
+  /** Document to update */
+  data: MaterialUpdateInput;
+  /** Unique document search */
+  where: MaterialWhereUniqueInput;
+};
+
+export type MaterialUpsertInput = {
+  /** Create document if it didn't exist */
+  create: MaterialCreateInput;
+  /** Update document if it exists */
+  update: MaterialUpdateInput;
+};
+
+export type MaterialUpsertWithNestedWhereUniqueInput = {
+  /** Upsert data */
+  data: MaterialUpsertInput;
+  /** Unique document search */
+  where: MaterialWhereUniqueInput;
+};
+
+/** Identifies documents */
+export type MaterialWhereInput = {
+  /** Logical AND on all given filters. */
+  AND?: InputMaybe<Array<MaterialWhereInput>>;
+  /** Logical NOT on all given filters combined by AND. */
+  NOT?: InputMaybe<Array<MaterialWhereInput>>;
+  /** Logical OR on all given filters. */
+  OR?: InputMaybe<Array<MaterialWhereInput>>;
+  /** Contains search across all appropriate fields. */
+  _search?: InputMaybe<Scalars['String']>;
+  createdAt?: InputMaybe<Scalars['DateTime']>;
+  /** All values greater than the given value. */
+  createdAt_gt?: InputMaybe<Scalars['DateTime']>;
+  /** All values greater than or equal the given value. */
+  createdAt_gte?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are contained in given list. */
+  createdAt_in?: InputMaybe<Array<Scalars['DateTime']>>;
+  /** All values less than the given value. */
+  createdAt_lt?: InputMaybe<Scalars['DateTime']>;
+  /** All values less than or equal the given value. */
+  createdAt_lte?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are not equal to given value. */
+  createdAt_not?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are not contained in given list. */
+  createdAt_not_in?: InputMaybe<Array<Scalars['DateTime']>>;
+  createdBy?: InputMaybe<UserWhereInput>;
+  id?: InputMaybe<Scalars['ID']>;
+  /** All values containing the given string. */
+  id_contains?: InputMaybe<Scalars['ID']>;
+  /** All values ending with the given string. */
+  id_ends_with?: InputMaybe<Scalars['ID']>;
+  /** All values that are contained in given list. */
+  id_in?: InputMaybe<Array<Scalars['ID']>>;
+  /** All values that are not equal to given value. */
+  id_not?: InputMaybe<Scalars['ID']>;
+  /** All values not containing the given string. */
+  id_not_contains?: InputMaybe<Scalars['ID']>;
+  /** All values not ending with the given string */
+  id_not_ends_with?: InputMaybe<Scalars['ID']>;
+  /** All values that are not contained in given list. */
+  id_not_in?: InputMaybe<Array<Scalars['ID']>>;
+  /** All values not starting with the given string. */
+  id_not_starts_with?: InputMaybe<Scalars['ID']>;
+  /** All values starting with the given string. */
+  id_starts_with?: InputMaybe<Scalars['ID']>;
+  publishedAt?: InputMaybe<Scalars['DateTime']>;
+  /** All values greater than the given value. */
+  publishedAt_gt?: InputMaybe<Scalars['DateTime']>;
+  /** All values greater than or equal the given value. */
+  publishedAt_gte?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are contained in given list. */
+  publishedAt_in?: InputMaybe<Array<Scalars['DateTime']>>;
+  /** All values less than the given value. */
+  publishedAt_lt?: InputMaybe<Scalars['DateTime']>;
+  /** All values less than or equal the given value. */
+  publishedAt_lte?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are not equal to given value. */
+  publishedAt_not?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are not contained in given list. */
+  publishedAt_not_in?: InputMaybe<Array<Scalars['DateTime']>>;
+  publishedBy?: InputMaybe<UserWhereInput>;
+  scheduledIn_every?: InputMaybe<ScheduledOperationWhereInput>;
+  scheduledIn_none?: InputMaybe<ScheduledOperationWhereInput>;
+  scheduledIn_some?: InputMaybe<ScheduledOperationWhereInput>;
+  updatedAt?: InputMaybe<Scalars['DateTime']>;
+  /** All values greater than the given value. */
+  updatedAt_gt?: InputMaybe<Scalars['DateTime']>;
+  /** All values greater than or equal the given value. */
+  updatedAt_gte?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are contained in given list. */
+  updatedAt_in?: InputMaybe<Array<Scalars['DateTime']>>;
+  /** All values less than the given value. */
+  updatedAt_lt?: InputMaybe<Scalars['DateTime']>;
+  /** All values less than or equal the given value. */
+  updatedAt_lte?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are not equal to given value. */
+  updatedAt_not?: InputMaybe<Scalars['DateTime']>;
+  /** All values that are not contained in given list. */
+  updatedAt_not_in?: InputMaybe<Array<Scalars['DateTime']>>;
+  updatedBy?: InputMaybe<UserWhereInput>;
+  url?: InputMaybe<Scalars['String']>;
+  /** All values containing the given string. */
+  url_contains?: InputMaybe<Scalars['String']>;
+  /** All values ending with the given string. */
+  url_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values that are contained in given list. */
+  url_in?: InputMaybe<Array<Scalars['String']>>;
+  /** All values that are not equal to given value. */
+  url_not?: InputMaybe<Scalars['String']>;
+  /** All values not containing the given string. */
+  url_not_contains?: InputMaybe<Scalars['String']>;
+  /** All values not ending with the given string */
+  url_not_ends_with?: InputMaybe<Scalars['String']>;
+  /** All values that are not contained in given list. */
+  url_not_in?: InputMaybe<Array<Scalars['String']>>;
+  /** All values not starting with the given string. */
+  url_not_starts_with?: InputMaybe<Scalars['String']>;
+  /** All values starting with the given string. */
+  url_starts_with?: InputMaybe<Scalars['String']>;
+};
+
+/** References Material record uniquely */
+export type MaterialWhereUniqueInput = {
+  id?: InputMaybe<Scalars['ID']>;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   /**
@@ -1873,6 +2294,8 @@ export type Mutation = {
   createChallenge?: Maybe<Challenge>;
   /** Create one lesson */
   createLesson?: Maybe<Lesson>;
+  /** Create one material */
+  createMaterial?: Maybe<Material>;
   /** Create one scheduledRelease */
   createScheduledRelease?: Maybe<ScheduledRelease>;
   /** Create one subscriber */
@@ -1907,6 +2330,13 @@ export type Mutation = {
   /** Delete many Lesson documents, return deleted documents */
   deleteManyLessonsConnection: LessonConnection;
   /**
+   * Delete many Material documents
+   * @deprecated Please use the new paginated many mutation (deleteManyMaterialsConnection)
+   */
+  deleteManyMaterials: BatchPayload;
+  /** Delete many Material documents, return deleted documents */
+  deleteManyMaterialsConnection: MaterialConnection;
+  /**
    * Delete many Subscriber documents
    * @deprecated Please use the new paginated many mutation (deleteManySubscribersConnection)
    */
@@ -1920,6 +2350,8 @@ export type Mutation = {
   deleteManyTeachers: BatchPayload;
   /** Delete many Teacher documents, return deleted documents */
   deleteManyTeachersConnection: TeacherConnection;
+  /** Delete one material from _all_ existing stages. Returns deleted document. */
+  deleteMaterial?: Maybe<Material>;
   /** Delete and return scheduled operation */
   deleteScheduledOperation?: Maybe<ScheduledOperation>;
   /** Delete one scheduledRelease from _all_ existing stages. Returns deleted document. */
@@ -1956,6 +2388,13 @@ export type Mutation = {
   /** Publish many Lesson documents */
   publishManyLessonsConnection: LessonConnection;
   /**
+   * Publish many Material documents
+   * @deprecated Please use the new paginated many mutation (publishManyMaterialsConnection)
+   */
+  publishManyMaterials: BatchPayload;
+  /** Publish many Material documents */
+  publishManyMaterialsConnection: MaterialConnection;
+  /**
    * Publish many Subscriber documents
    * @deprecated Please use the new paginated many mutation (publishManySubscribersConnection)
    */
@@ -1969,6 +2408,8 @@ export type Mutation = {
   publishManyTeachers: BatchPayload;
   /** Publish many Teacher documents */
   publishManyTeachersConnection: TeacherConnection;
+  /** Publish one material */
+  publishMaterial?: Maybe<Material>;
   /** Publish one subscriber */
   publishSubscriber?: Maybe<Subscriber>;
   /** Publish one teacher */
@@ -1979,6 +2420,8 @@ export type Mutation = {
   schedulePublishChallenge?: Maybe<Challenge>;
   /** Schedule to publish one lesson */
   schedulePublishLesson?: Maybe<Lesson>;
+  /** Schedule to publish one material */
+  schedulePublishMaterial?: Maybe<Material>;
   /** Schedule to publish one subscriber */
   schedulePublishSubscriber?: Maybe<Subscriber>;
   /** Schedule to publish one teacher */
@@ -1989,6 +2432,8 @@ export type Mutation = {
   scheduleUnpublishChallenge?: Maybe<Challenge>;
   /** Unpublish one lesson from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
   scheduleUnpublishLesson?: Maybe<Lesson>;
+  /** Unpublish one material from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
+  scheduleUnpublishMaterial?: Maybe<Material>;
   /** Unpublish one subscriber from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
   scheduleUnpublishSubscriber?: Maybe<Subscriber>;
   /** Unpublish one teacher from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
@@ -2021,6 +2466,13 @@ export type Mutation = {
   /** Find many Lesson documents that match criteria in specified stage and unpublish from target stages */
   unpublishManyLessonsConnection: LessonConnection;
   /**
+   * Unpublish many Material documents
+   * @deprecated Please use the new paginated many mutation (unpublishManyMaterialsConnection)
+   */
+  unpublishManyMaterials: BatchPayload;
+  /** Find many Material documents that match criteria in specified stage and unpublish from target stages */
+  unpublishManyMaterialsConnection: MaterialConnection;
+  /**
    * Unpublish many Subscriber documents
    * @deprecated Please use the new paginated many mutation (unpublishManySubscribersConnection)
    */
@@ -2034,6 +2486,8 @@ export type Mutation = {
   unpublishManyTeachers: BatchPayload;
   /** Find many Teacher documents that match criteria in specified stage and unpublish from target stages */
   unpublishManyTeachersConnection: TeacherConnection;
+  /** Unpublish one material from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
+  unpublishMaterial?: Maybe<Material>;
   /** Unpublish one subscriber from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
   unpublishSubscriber?: Maybe<Subscriber>;
   /** Unpublish one teacher from selected stages. Unpublish either the complete document with its relations, localizations and base data or specific localizations only. */
@@ -2066,6 +2520,13 @@ export type Mutation = {
   /** Update many Lesson documents */
   updateManyLessonsConnection: LessonConnection;
   /**
+   * Update many materials
+   * @deprecated Please use the new paginated many mutation (updateManyMaterialsConnection)
+   */
+  updateManyMaterials: BatchPayload;
+  /** Update many Material documents */
+  updateManyMaterialsConnection: MaterialConnection;
+  /**
    * Update many subscribers
    * @deprecated Please use the new paginated many mutation (updateManySubscribersConnection)
    */
@@ -2079,6 +2540,8 @@ export type Mutation = {
   updateManyTeachers: BatchPayload;
   /** Update many Teacher documents */
   updateManyTeachersConnection: TeacherConnection;
+  /** Update one material */
+  updateMaterial?: Maybe<Material>;
   /** Update one scheduledRelease */
   updateScheduledRelease?: Maybe<ScheduledRelease>;
   /** Update one subscriber */
@@ -2091,6 +2554,8 @@ export type Mutation = {
   upsertChallenge?: Maybe<Challenge>;
   /** Upsert one lesson */
   upsertLesson?: Maybe<Lesson>;
+  /** Upsert one material */
+  upsertMaterial?: Maybe<Material>;
   /** Upsert one subscriber */
   upsertSubscriber?: Maybe<Subscriber>;
   /** Upsert one teacher */
@@ -2110,6 +2575,11 @@ export type MutationCreateChallengeArgs = {
 
 export type MutationCreateLessonArgs = {
   data: LessonCreateInput;
+};
+
+
+export type MutationCreateMaterialArgs = {
+  data: MaterialCreateInput;
 };
 
 
@@ -2188,6 +2658,21 @@ export type MutationDeleteManyLessonsConnectionArgs = {
 };
 
 
+export type MutationDeleteManyMaterialsArgs = {
+  where?: InputMaybe<MaterialManyWhereInput>;
+};
+
+
+export type MutationDeleteManyMaterialsConnectionArgs = {
+  after?: InputMaybe<Scalars['ID']>;
+  before?: InputMaybe<Scalars['ID']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  skip?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<MaterialManyWhereInput>;
+};
+
+
 export type MutationDeleteManySubscribersArgs = {
   where?: InputMaybe<SubscriberManyWhereInput>;
 };
@@ -2215,6 +2700,11 @@ export type MutationDeleteManyTeachersConnectionArgs = {
   last?: InputMaybe<Scalars['Int']>;
   skip?: InputMaybe<Scalars['Int']>;
   where?: InputMaybe<TeacherManyWhereInput>;
+};
+
+
+export type MutationDeleteMaterialArgs = {
+  where: MaterialWhereUniqueInput;
 };
 
 
@@ -2319,6 +2809,24 @@ export type MutationPublishManyLessonsConnectionArgs = {
 };
 
 
+export type MutationPublishManyMaterialsArgs = {
+  to?: Array<Stage>;
+  where?: InputMaybe<MaterialManyWhereInput>;
+};
+
+
+export type MutationPublishManyMaterialsConnectionArgs = {
+  after?: InputMaybe<Scalars['ID']>;
+  before?: InputMaybe<Scalars['ID']>;
+  first?: InputMaybe<Scalars['Int']>;
+  from?: InputMaybe<Stage>;
+  last?: InputMaybe<Scalars['Int']>;
+  skip?: InputMaybe<Scalars['Int']>;
+  to?: Array<Stage>;
+  where?: InputMaybe<MaterialManyWhereInput>;
+};
+
+
 export type MutationPublishManySubscribersArgs = {
   to?: Array<Stage>;
   where?: InputMaybe<SubscriberManyWhereInput>;
@@ -2352,6 +2860,12 @@ export type MutationPublishManyTeachersConnectionArgs = {
   skip?: InputMaybe<Scalars['Int']>;
   to?: Array<Stage>;
   where?: InputMaybe<TeacherManyWhereInput>;
+};
+
+
+export type MutationPublishMaterialArgs = {
+  to?: Array<Stage>;
+  where: MaterialWhereUniqueInput;
 };
 
 
@@ -2394,6 +2908,14 @@ export type MutationSchedulePublishLessonArgs = {
 };
 
 
+export type MutationSchedulePublishMaterialArgs = {
+  releaseAt?: InputMaybe<Scalars['DateTime']>;
+  releaseId?: InputMaybe<Scalars['String']>;
+  to?: Array<Stage>;
+  where: MaterialWhereUniqueInput;
+};
+
+
 export type MutationSchedulePublishSubscriberArgs = {
   releaseAt?: InputMaybe<Scalars['DateTime']>;
   releaseId?: InputMaybe<Scalars['String']>;
@@ -2433,6 +2955,14 @@ export type MutationScheduleUnpublishLessonArgs = {
   releaseAt?: InputMaybe<Scalars['DateTime']>;
   releaseId?: InputMaybe<Scalars['String']>;
   where: LessonWhereUniqueInput;
+};
+
+
+export type MutationScheduleUnpublishMaterialArgs = {
+  from?: Array<Stage>;
+  releaseAt?: InputMaybe<Scalars['DateTime']>;
+  releaseId?: InputMaybe<Scalars['String']>;
+  where: MaterialWhereUniqueInput;
 };
 
 
@@ -2530,6 +3060,24 @@ export type MutationUnpublishManyLessonsConnectionArgs = {
 };
 
 
+export type MutationUnpublishManyMaterialsArgs = {
+  from?: Array<Stage>;
+  where?: InputMaybe<MaterialManyWhereInput>;
+};
+
+
+export type MutationUnpublishManyMaterialsConnectionArgs = {
+  after?: InputMaybe<Scalars['ID']>;
+  before?: InputMaybe<Scalars['ID']>;
+  first?: InputMaybe<Scalars['Int']>;
+  from?: Array<Stage>;
+  last?: InputMaybe<Scalars['Int']>;
+  skip?: InputMaybe<Scalars['Int']>;
+  stage?: InputMaybe<Stage>;
+  where?: InputMaybe<MaterialManyWhereInput>;
+};
+
+
 export type MutationUnpublishManySubscribersArgs = {
   from?: Array<Stage>;
   where?: InputMaybe<SubscriberManyWhereInput>;
@@ -2563,6 +3111,12 @@ export type MutationUnpublishManyTeachersConnectionArgs = {
   skip?: InputMaybe<Scalars['Int']>;
   stage?: InputMaybe<Stage>;
   where?: InputMaybe<TeacherManyWhereInput>;
+};
+
+
+export type MutationUnpublishMaterialArgs = {
+  from?: Array<Stage>;
+  where: MaterialWhereUniqueInput;
 };
 
 
@@ -2647,6 +3201,23 @@ export type MutationUpdateManyLessonsConnectionArgs = {
 };
 
 
+export type MutationUpdateManyMaterialsArgs = {
+  data: MaterialUpdateManyInput;
+  where?: InputMaybe<MaterialManyWhereInput>;
+};
+
+
+export type MutationUpdateManyMaterialsConnectionArgs = {
+  after?: InputMaybe<Scalars['ID']>;
+  before?: InputMaybe<Scalars['ID']>;
+  data: MaterialUpdateManyInput;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  skip?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<MaterialManyWhereInput>;
+};
+
+
 export type MutationUpdateManySubscribersArgs = {
   data: SubscriberUpdateManyInput;
   where?: InputMaybe<SubscriberManyWhereInput>;
@@ -2678,6 +3249,12 @@ export type MutationUpdateManyTeachersConnectionArgs = {
   last?: InputMaybe<Scalars['Int']>;
   skip?: InputMaybe<Scalars['Int']>;
   where?: InputMaybe<TeacherManyWhereInput>;
+};
+
+
+export type MutationUpdateMaterialArgs = {
+  data: MaterialUpdateInput;
+  where: MaterialWhereUniqueInput;
 };
 
 
@@ -2714,6 +3291,12 @@ export type MutationUpsertChallengeArgs = {
 export type MutationUpsertLessonArgs = {
   upsert: LessonUpsertInput;
   where: LessonWhereUniqueInput;
+};
+
+
+export type MutationUpsertMaterialArgs = {
+  upsert: MaterialUpsertInput;
+  where: MaterialWhereUniqueInput;
 };
 
 
@@ -2784,6 +3367,14 @@ export type Query = {
   lessons: Array<Lesson>;
   /** Retrieve multiple lessons using the Relay connection interface */
   lessonsConnection: LessonConnection;
+  /** Retrieve a single material */
+  material?: Maybe<Material>;
+  /** Retrieve document version */
+  materialVersion?: Maybe<DocumentVersion>;
+  /** Retrieve multiple materials */
+  materials: Array<Material>;
+  /** Retrieve multiple materials using the Relay connection interface */
+  materialsConnection: MaterialConnection;
   /** Fetches an object given its ID */
   node?: Maybe<Node>;
   /** Retrieve a single scheduledOperation */
@@ -2934,6 +3525,44 @@ export type QueryLessonsConnectionArgs = {
   skip?: InputMaybe<Scalars['Int']>;
   stage?: Stage;
   where?: InputMaybe<LessonWhereInput>;
+};
+
+
+export type QueryMaterialArgs = {
+  locales?: Array<Locale>;
+  stage?: Stage;
+  where: MaterialWhereUniqueInput;
+};
+
+
+export type QueryMaterialVersionArgs = {
+  where: VersionWhereInput;
+};
+
+
+export type QueryMaterialsArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  locales?: Array<Locale>;
+  orderBy?: InputMaybe<MaterialOrderByInput>;
+  skip?: InputMaybe<Scalars['Int']>;
+  stage?: Stage;
+  where?: InputMaybe<MaterialWhereInput>;
+};
+
+
+export type QueryMaterialsConnectionArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  locales?: Array<Locale>;
+  orderBy?: InputMaybe<MaterialOrderByInput>;
+  skip?: InputMaybe<Scalars['Int']>;
+  stage?: Stage;
+  where?: InputMaybe<MaterialWhereInput>;
 };
 
 
@@ -3225,7 +3854,7 @@ export type ScheduledOperationUpdatedByArgs = {
   locales?: InputMaybe<Array<Locale>>;
 };
 
-export type ScheduledOperationAffectedDocument = Asset | Challenge | Lesson | Subscriber | Teacher;
+export type ScheduledOperationAffectedDocument = Asset | Challenge | Lesson | Material | Subscriber | Teacher;
 
 export type ScheduledOperationConnectInput = {
   /** Allow to specify document position in list of connected documents, will default to appending at end of list */
@@ -5581,7 +6210,7 @@ export type GetLessonBySlugQueryVariables = Exact<{
 }>;
 
 
-export type GetLessonBySlugQuery = { __typename?: 'Query', lesson?: { __typename?: 'Lesson', title: string, videoId: string, description?: string | null, teacher?: { __typename?: 'Teacher', name: string, bio: string, avatarURL: string } | null } | null };
+export type GetLessonBySlugQuery = { __typename?: 'Query', lesson?: { __typename?: 'Lesson', title: string, videoId: string, description?: string | null, challenge?: { __typename?: 'Challenge', url: string } | null, material?: { __typename?: 'Material', url: string } | null, teacher?: { __typename?: 'Teacher', name: string, bio: string, avatarURL: string } | null } | null };
 
 export type GetLessonsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -5629,6 +6258,12 @@ export const GetLessonBySlugDocument = gql`
     title
     videoId
     description
+    challenge {
+      url
+    }
+    material {
+      url
+    }
     teacher {
       name
       bio
